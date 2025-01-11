@@ -5,14 +5,17 @@ import java.awt.Graphics;
 import javax.swing.Timer;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.KeyEvent;
 
-
-public class Panel extends JPanel implements ActionListener{
+public class Panel extends JPanel implements ActionListener, KeyListener{
     int PANEL_WIDTH;
     int PANEL_HEIGHT;
     Timer loop;
     Rect rect;
-    Rect2 rect2;
+    Ball ball;
+    Paddle p1;
+    Paddle p2;
 
     Panel(int w, int h){
         this.PANEL_WIDTH = w;
@@ -21,25 +24,39 @@ public class Panel extends JPanel implements ActionListener{
         this.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
         this.setBackground(Color.BLACK);
 
-        this.rect = new Rect(200, 100, 50, 50);
-        this.rect2 = new Rect2(0, 10, 12, 60);
+        this.ball = new Ball(PANEL_WIDTH/2, PANEL_HEIGHT/2, 20, 20);
+        this.p1 = new Paddle(0, 0, 12, 80);
+        this.p2 = new Paddle(PANEL_WIDTH - 12, 0, 12, 80);
         this.loop = new Timer(10, this);
         loop.start();
-        
-
     }
-
 
     @Override
     public void paint(Graphics g){
         super.paint(g);
-        this.rect.draw(g);
-        this.rect2.draw(g);
+
+        this.ball.draw(g);
+        this.p1.draw(g);
+        this.p2.draw(g);
     }
 
     @Override
     public void actionPerformed(ActionEvent e){
-        this.rect.update(this.PANEL_WIDTH, this.PANEL_HEIGHT);
+        this.ball.update(this.PANEL_WIDTH, this.PANEL_HEIGHT);
         repaint();
     }
+
+    @Override
+    public void keyTyped(KeyEvent e){}
+
+    @Override
+    public void keyPressed(KeyEvent e){
+        System.out.println("UP ARROW PRESSED UP!");
+        
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e){}
+
+
 }
